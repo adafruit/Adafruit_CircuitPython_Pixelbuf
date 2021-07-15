@@ -25,7 +25,7 @@ class PixelBuf:  # pylint: disable=too-many-instance-attributes
     """
     A sequence of RGB/RGBW pixels.
 
-    This is the pure python implementation of CircuitPython's _pixelbuf.
+    This is the pure python implementation of CircuitPython's adafruit_pixelbuf.
 
     :param ~int n: Number of pixels
     :param ~str byteorder: Byte order string constant (also sets bpp)
