@@ -104,6 +104,11 @@ This example tests that pypixelbuf works.
     buffer = TestBuf(20, bytearray(20 * 3), "RGB", 1.0, auto_write=True)
     buffer[0] = (1, 2, 3)
 
+Documentation
+=============
+
+API documentation for this library can be found on `Read the Docs <https://circuitpython.readthedocs.io/projects/pixelbuf/en/latest/>`_.
+
 Contributing
 ============
 
