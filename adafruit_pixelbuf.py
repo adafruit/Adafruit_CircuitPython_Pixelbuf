@@ -15,6 +15,7 @@ It is based on the work in neopixel.py and adafruit_dotstar.py.
 
 try:
     from typing import Optional, Tuple, Union, Sequence
+
     ColorUnion = Union[int, Tuple[int, int, int], Tuple[int, int, int, int]]
 except ImportError:
     pass
@@ -295,7 +296,9 @@ class PixelBuf:  # pylint: disable=too-many-instance-attributes
             b * self._brightness
         )
 
-    def __setitem__(self, index: Union[int, slice], val: Union[ColorUnion, Sequence[ColorUnion]]):
+    def __setitem__(
+        self, index: Union[int, slice], val: Union[ColorUnion, Sequence[ColorUnion]]
+    ):
         if isinstance(index, slice):
             start, stop, step = index.indices(self._pixels)
             for val_i, in_i in enumerate(range(start, stop, step)):
