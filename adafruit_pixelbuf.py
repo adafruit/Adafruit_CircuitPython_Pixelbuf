@@ -112,8 +112,8 @@ class PixelBuf:  # pylint: disable=too-many-instance-attributes
             W - White
             P - PWM (PWM Duty cycle for pixel - dotstars 0 - 1.0)
 
-        :param: ~str bpp: bpp string.
-        :return: ~tuple: bpp, byteorder, has_white, dotstar_mode
+        :param ~str bpp: bpp string.
+        :return ~tuple: bpp, byteorder, has_white, dotstar_mode
         """
         bpp = len(byteorder)
         dotstar_mode = False
