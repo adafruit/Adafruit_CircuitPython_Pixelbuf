@@ -13,6 +13,12 @@ It is based on the work in neopixel.py and adafruit_dotstar.py.
 
 """
 
+try:
+    from typing import Optional, Tuple, Union, Sequence
+    ColorUnion = Union[int, Tuple[int, int, int], Tuple[int, int, int, int]]
+except ImportError:
+    pass
+
 __version__ = "0.0.0-auto.0"
 __repo__ = "https://github.com/adafruit/Adafruit_CircuitPython_Pixelbuf.git"
 
@@ -37,12 +43,12 @@ class PixelBuf:  # pylint: disable=too-many-instance-attributes
 
     def __init__(  # pylint: disable=too-many-locals,too-many-arguments
         self,
-        n,
-        byteorder="BGR",
-        brightness=1.0,
-        auto_write=False,
-        header=None,
-        trailer=None,
+        n: int,
+        byteorder: str = "BGR",
+        brightness: float = 1.0,
+        auto_write: bool = False,
+        header: Optional[bytes] = None,
+        trailer: Optional[bytes] = None,
     ):
 
         bpp, byteorder_tuple, has_white, dotstar_mode = self.parse_byteorder(byteorder)
@@ -94,7 +100,7 @@ class PixelBuf:  # pylint: disable=too-many-instance-attributes
         self.auto_write = auto_write
 
     @staticmethod
-    def parse_byteorder(byteorder):
+    def parse_byteorder(byteorder: str) -> Tuple[int, str, bool, bool]:
         """
         Parse a Byteorder string for validity and determine bpp, byte order, and
         dostar brightness bits.
@@ -153,7 +159,7 @@ class PixelBuf:  # pylint: disable=too-many-instance-attributes
         return self._brightness
 
     @brightness.setter
-    def brightness(self, value):
+    def brightness(self, value: float):
         value = min(max(value, 0.0), 1.0)
         change = value - self._brightness
         if -0.001 < change < 0.001:
@@ -196,7 +202,7 @@ class PixelBuf:  # pylint: disable=too-many-instance-attributes
         """
         return self._transmit(self._post_brightness_buffer)
 
-    def fill(self, color):
+    def fill(self, color: ColorUnion):
         """
         Fills the given pixelbuf with the given color.
         :param pixelbuf: A pixel object.
@@ -208,7 +214,7 @@ class PixelBuf:  # pylint: disable=too-many-instance-attributes
         if self.auto_write:
             self.show()
 
-    def _parse_color(self, value):
+    def _parse_color(self, value: ColorUnion) -> Tuple[int, int, int, int]:
         r = 0
         g = 0
         b = 0
@@ -258,7 +264,7 @@ class PixelBuf:  # pylint: disable=too-many-instance-attributes
         return (r, g, b, w)
 
     def _set_item(
-        self, index, r, g, b, w
+        self, index: int, r: int, g: int, b: int, w: int
     ):  # pylint: disable=too-many-locals,too-many-branches,too-many-arguments
         if index < 0:
             index += len(self)
@@ -289,7 +295,7 @@ class PixelBuf:  # pylint: disable=too-many-instance-attributes
             b * self._brightness
         )
 
-    def __setitem__(self, index, val):
+    def __setitem__(self, index: Union[int, slice], val: Union[ColorUnion, Sequence[ColorUnion]]):
         if isinstance(index, slice):
             start, stop, step = index.indices(self._pixels)
             for val_i, in_i in enumerate(range(start, stop, step)):
@@ -302,7 +308,7 @@ class PixelBuf:  # pylint: disable=too-many-instance-attributes
         if self.auto_write:
             self.show()
 
-    def _getitem(self, index):
+    def _getitem(self, index: int):
         start = self._offset + (index * self._bpp)
         buffer = (
             self._pre_brightness_buffer
@@ -322,7 +328,7 @@ class PixelBuf:  # pylint: disable=too-many-instance-attributes
             )
         return value
 
-    def __getitem__(self, index):
+    def __getitem__(self, index: Union[int, slice]):
         if isinstance(index, slice):
             out = []
             for in_i in range(
@@ -336,5 +342,5 @@ class PixelBuf:  # pylint: disable=too-many-instance-attributes
             raise IndexError
         return self._getitem(index)
 
-    def _transmit(self, buffer):
+    def _transmit(self, buffer: bytearray):
         raise NotImplementedError("Must be subclassed")
