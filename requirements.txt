@@ -4,3 +4,4 @@
 # SPDX-License-Identifier: MIT
 
 Adafruit-Blinka
+sphinx>=4.0.0
