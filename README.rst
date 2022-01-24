@@ -3,7 +3,7 @@ Introduction
 
 
 .. image:: https://readthedocs.org/projects/adafruit-circuitpython-pixelbuf/badge/?version=latest
-    :target: https://circuitpython.readthedocs.io/projects/pixelbuf/en/latest/
+    :target: https://docs.circuitpython.org/projects/pixelbuf/en/latest/
     :alt: Documentation Status
 
 
@@ -107,7 +107,7 @@ This example tests that pypixelbuf works.
 Documentation
 =============
 
-API documentation for this library can be found on `Read the Docs <https://circuitpython.readthedocs.io/projects/pixelbuf/en/latest/>`_.
+API documentation for this library can be found on `Read the Docs <https://docs.circuitpython.org/projects/pixelbuf/en/latest/>`_.
 
 Contributing
 ============
