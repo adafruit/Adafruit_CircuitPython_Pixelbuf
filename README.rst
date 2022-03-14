@@ -90,11 +90,11 @@ Or the following command to update an existing version:
 Usage Example
 =============
 
-This example tests that pypixelbuf works.
+This example tests that pixelbuf works.
 
 .. code-block:: python
 
-    class TestBuf(adafruit_pypixelbuf.PixelBuf):
+    class TestBuf(adafruit_pixelbuf.PixelBuf):
         called = False
 
         def show(self):
