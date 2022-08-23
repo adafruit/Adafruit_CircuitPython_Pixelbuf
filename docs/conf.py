@@ -6,6 +6,7 @@
 
 import os
 import sys
+import datetime
 
 sys.path.insert(0, os.path.abspath(".."))
 
@@ -46,7 +47,8 @@ master_doc = "index"
 
 # General information about the project.
 project = "Adafruit CircuitPython Pixelbuf Library"
-copyright = "2021 Rose Hooper"
+current_year = str(datetime.datetime.now().year)
+copyright = current_year + " Rose Hooper"
 author = "Rose Hooper"
 
 # The version info for the project you're documenting, acts as replacement for
