@@ -44,7 +44,8 @@ class PixelBuf:  # pylint: disable=too-many-instance-attributes
 
     def __init__(  # pylint: disable=too-many-locals,too-many-arguments
         self,
-        n: int,
+        size: int,
+        *,
         byteorder: str = "BGR",
         brightness: float = 1.0,
         auto_write: bool = False,
