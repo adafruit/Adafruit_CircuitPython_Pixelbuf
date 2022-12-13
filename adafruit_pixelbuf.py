@@ -58,7 +58,7 @@ class PixelBuf:  # pylint: disable=too-many-instance-attributes
         self.auto_write = False
 
         effective_bpp = 4 if dotstar_mode else bpp
-        _bytes = effective_bpp * n
+        _bytes = effective_bpp * size
         buf = bytearray(_bytes)
         offset = 0
 
@@ -73,7 +73,7 @@ class PixelBuf:  # pylint: disable=too-many-instance-attributes
                 raise TypeError("trailer must be a bytearray")
             buf += trailer
 
-        self._pixels = n
+        self._pixels = size
         self._bytes = _bytes
         self._byteorder = byteorder_tuple
         self._byteorder_string = byteorder
