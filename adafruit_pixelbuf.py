@@ -52,7 +52,6 @@ class PixelBuf:  # pylint: disable=too-many-instance-attributes
         header: Optional[bytes] = None,
         trailer: Optional[bytes] = None,
     ):
-
         bpp, byteorder_tuple, has_white, dotstar_mode = self.parse_byteorder(byteorder)
 
         self.auto_write = False
