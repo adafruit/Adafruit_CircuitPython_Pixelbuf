@@ -206,6 +206,7 @@ class PixelBuf:  # pylint: disable=too-many-instance-attributes
     def fill(self, color: ColorUnion):
         """
         Fills the given pixelbuf with the given color.
+
         :param pixelbuf: A pixel object.
         :param color: Color to set.
         """
