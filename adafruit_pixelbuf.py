@@ -214,13 +214,13 @@ class PixelBuf:  # pylint: disable=too-many-instance-attributes
         """
         r, g, b, w = self._parse_color(color)
         end = 0
-        if (first >= self._pixels):
+        if first >= self._pixels:
             pass
         if (count == 0):
             end = self._pixels
         else:
             end = first + count
-            if (end > self._pixels):
+            if end > self._pixels:
                 end = self._pixels
         for i in range(first, end):
             self._set_item(i, r, g, b, w)
