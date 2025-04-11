@@ -212,9 +212,6 @@ class PixelBuf:  # pylint: disable=too-many-instance-attributes
         :param first: Index of first pixel to fill, starting from 0. Must-be in-bounds, no clipping is performed. 0 if unspecified.
         :param count: Number of pixels to fill, as a positive value. Passing 0 or leaving unspecified will fill to end of strip.
         """
-        print(f'led_count value is {self._pixels}')
-        print(f'first value is {first}')
-        print(f'count value is {count}')
         r, g, b, w = self._parse_color(color)
         end = 0
         if (first >= self._pixels):
