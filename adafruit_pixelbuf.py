@@ -216,7 +216,7 @@ class PixelBuf:  # pylint: disable=too-many-instance-attributes
         end = 0
         if first >= self._pixels:
             pass
-        if (count == 0):
+        if count == 0:
             end = self._pixels
         else:
             end = first + count
