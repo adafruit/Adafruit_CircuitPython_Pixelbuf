@@ -209,8 +209,8 @@ class PixelBuf:  # pylint: disable=too-many-instance-attributes
 
         :param pixelbuf: A pixel object.
         :param color: Color to set.
-        :param first: Index of first pixel to fill, starting from 0. Must-be in-bounds, no clipping is performed. 0 if unspecified.
-        :param count: Number of pixels to fill, as a positive value. Passing 0 or leaving unspecified will fill to end of strip.
+        :param first: Index of first pixel to fill, starting from 0. Must-be in-bounds
+        :param count: Number of pixels to fill, as a positive value. 0 or unspecified will fill all
         """
         r, g, b, w = self._parse_color(color)
         end = 0
