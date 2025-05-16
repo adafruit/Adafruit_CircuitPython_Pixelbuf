@@ -14,7 +14,7 @@ It is based on the work in neopixel.py and adafruit_dotstar.py.
 """
 
 try:
-    from typing import Optional, Tuple, Union, Sequence
+    from typing import Optional, Sequence, Tuple, Union
 
     ColorUnion = Union[int, Tuple[int, int, int], Tuple[int, int, int, int]]
 except ImportError:
@@ -28,7 +28,7 @@ DOTSTAR_LED_START = 0b11100000  # Three "1" bits, followed by 5 brightness bits
 DOTSTAR_LED_BRIGHTNESS = 0b00011111
 
 
-class PixelBuf:  # pylint: disable=too-many-instance-attributes
+class PixelBuf:
     """
     A sequence of RGB/RGBW pixels.
 
@@ -42,7 +42,7 @@ class PixelBuf:  # pylint: disable=too-many-instance-attributes
     :param bytes trailer: Sequence of bytes to always send after pixel values.
     """
 
-    def __init__(  # pylint: disable=too-many-locals,too-many-arguments
+    def __init__(
         self,
         size: int,
         *,
@@ -177,9 +177,7 @@ class PixelBuf:  # pylint: disable=too-many-instance-attributes
             # Don't adjust per-pixel luminance bytes in dotstar mode
             if self._dotstar_mode and (i % 4 != offset_check):
                 continue
-            self._post_brightness_buffer[i] = int(
-                self._pre_brightness_buffer[i] * self._brightness
-            )
+            self._post_brightness_buffer[i] = int(self._pre_brightness_buffer[i] * self._brightness)
 
         if self.auto_write:
             self.show()
@@ -231,9 +229,7 @@ class PixelBuf:  # pylint: disable=too-many-instance-attributes
                 w = 1.0
         else:
             if len(value) < 3 or len(value) > 4:
-                raise ValueError(
-                    "Expected tuple of length {}, got {}".format(self._bpp, len(value))
-                )
+                raise ValueError(f"Expected tuple of length {self._bpp}, got {len(value)}")
             if len(value) == self._bpp:
                 if self._bpp == 3:
                     r, g, b = value
@@ -265,9 +261,7 @@ class PixelBuf:  # pylint: disable=too-many-instance-attributes
 
         return (r, g, b, w)
 
-    def _set_item(
-        self, index: int, r: int, g: int, b: int, w: int
-    ):  # pylint: disable=too-many-locals,too-many-branches,too-many-arguments
+    def _set_item(self, index: int, r: int, g: int, b: int, w: int):
         if index < 0:
             index += len(self)
         if index >= self._pixels or index < 0:
@@ -287,19 +281,11 @@ class PixelBuf:  # pylint: disable=too-many-instance-attributes
                 w = int(w * self._brightness)
             self._post_brightness_buffer[offset + self._byteorder[3]] = w
 
-        self._post_brightness_buffer[offset + self._byteorder[0]] = int(
-            r * self._brightness
-        )
-        self._post_brightness_buffer[offset + self._byteorder[1]] = int(
-            g * self._brightness
-        )
-        self._post_brightness_buffer[offset + self._byteorder[2]] = int(
-            b * self._brightness
-        )
+        self._post_brightness_buffer[offset + self._byteorder[0]] = int(r * self._brightness)
+        self._post_brightness_buffer[offset + self._byteorder[1]] = int(g * self._brightness)
+        self._post_brightness_buffer[offset + self._byteorder[2]] = int(b * self._brightness)
 
-    def __setitem__(
-        self, index: Union[int, slice], val: Union[ColorUnion, Sequence[ColorUnion]]
-    ):
+    def __setitem__(self, index: Union[int, slice], val: Union[ColorUnion, Sequence[ColorUnion]]):
         if isinstance(index, slice):
             start, stop, step = index.indices(self._pixels)
             for val_i, in_i in enumerate(range(start, stop, step)):
@@ -327,17 +313,13 @@ class PixelBuf:  # pylint: disable=too-many-instance-attributes
         if self._has_white:
             value.append(buffer[start + self._byteorder[3]])
         elif self._dotstar_mode:
-            value.append(
-                (buffer[start + self._byteorder[3]] & DOTSTAR_LED_BRIGHTNESS) / 31.0
-            )
+            value.append((buffer[start + self._byteorder[3]] & DOTSTAR_LED_BRIGHTNESS) / 31.0)
         return value
 
     def __getitem__(self, index: Union[int, slice]):
         if isinstance(index, slice):
             out = []
-            for in_i in range(
-                *index.indices(len(self._post_brightness_buffer) // self._bpp)
-            ):
+            for in_i in range(*index.indices(len(self._post_brightness_buffer) // self._bpp)):
                 out.append(self._getitem(in_i))
             return out
         if index < 0:
