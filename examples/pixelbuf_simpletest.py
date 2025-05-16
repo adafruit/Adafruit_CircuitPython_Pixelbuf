@@ -11,7 +11,7 @@ class TestBuf(adafruit_pixelbuf.PixelBuf):
     def n(self):
         return len(self)
 
-    def _transmit(self, buffer):  # pylint: disable=unused-argument
+    def _transmit(self, buffer):
         self.called = True
 
 
