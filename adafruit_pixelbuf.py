@@ -201,15 +201,26 @@ class PixelBuf:
         """
         return self._transmit(self._post_brightness_buffer)
 
-    def fill(self, color: ColorUnion):
+    def fill(self, color: ColorUnion, first: int, count: int):
         """
-        Fills the given pixelbuf with the given color.
+        Fill all or part of the pixelbuf with the given color.
 
         :param pixelbuf: A pixel object.
         :param color: Color to set.
+        :param first: Index of first pixel to fill, starting from 0. Must-be in-bounds
+        :param count: Number of pixels to fill, as a positive value. 0 or unspecified will fill all
         """
         r, g, b, w = self._parse_color(color)
-        for i in range(self._pixels):
+        end = 0
+        if first >= self._pixels:
+            pass
+        if count == 0:
+            end = self._pixels
+        else:
+            end = first + count
+            if end > self._pixels:
+                end = self._pixels
+        for i in range(first, end):
             self._set_item(i, r, g, b, w)
         if self.auto_write:
             self.show()
