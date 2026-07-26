@@ -40,6 +40,10 @@ class PixelBuf:
     :param ~bool auto_write: Whether to automatically write pixels (Default False)
     :param bytes header: Sequence of bytes to always send before pixel values.
     :param bytes trailer: Sequence of bytes to always send after pixel values.
+
+    Assign a packed integer or RGB/RGBW tuple to a slice to fill every selected
+    pixel with one color. Assign a list of colors to set each selected pixel
+    individually.
     """
 
     def __init__(
@@ -288,9 +292,20 @@ class PixelBuf:
     def __setitem__(self, index: Union[int, slice], val: Union[ColorUnion, Sequence[ColorUnion]]):
         if isinstance(index, slice):
             start, stop, step = index.indices(self._pixels)
-            for val_i, in_i in enumerate(range(start, stop, step)):
-                r, g, b, w = self._parse_color(val[val_i])
-                self._set_item(in_i, r, g, b, w)
+            indices = range(start, stop, step)
+            is_single_color = isinstance(val, int) or (
+                isinstance(val, tuple)
+                and len(val) in {3, 4}
+                and all(isinstance(component, (int, float)) for component in val)
+            )
+            if is_single_color:
+                r, g, b, w = self._parse_color(val)
+                for in_i in indices:
+                    self._set_item(in_i, r, g, b, w)
+            else:
+                for val_i, in_i in enumerate(indices):
+                    r, g, b, w = self._parse_color(val[val_i])
+                    self._set_item(in_i, r, g, b, w)
         else:
             r, g, b, w = self._parse_color(val)
             self._set_item(index, r, g, b, w)
